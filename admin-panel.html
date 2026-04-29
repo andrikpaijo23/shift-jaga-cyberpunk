@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>CyberShift - Admin Panel</title>
     <style>
         * {
@@ -20,13 +20,12 @@
         }
 
         .glass-card {
-            background: rgba(10, 20, 30, 0.75);
+            background: rgba(10, 20, 30, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 255, 255, 0.4);
             border-radius: 28px;
             box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
             padding: 24px;
-            transition: all 0.3s ease;
         }
 
         .btn-cyber {
@@ -40,14 +39,12 @@
             transition: 0.2s;
             text-decoration: none;
             display: inline-block;
-            font-size: 0.9rem;
         }
 
         .btn-cyber:hover {
             background: #0ff;
             color: #000;
             box-shadow: 0 0 20px #0ff;
-            transform: translateY(-2px);
         }
 
         .btn-danger {
@@ -57,17 +54,6 @@
 
         .btn-danger:hover {
             background: #ff3366;
-            color: #000;
-            box-shadow: 0 0 20px #ff3366;
-        }
-
-        .btn-success {
-            border-color: #0f0;
-            color: #0f0;
-        }
-
-        .btn-success:hover {
-            background: #0f0;
             color: #000;
         }
 
@@ -79,7 +65,6 @@
             color: #0ff;
             width: 100%;
             outline: none;
-            font-size: 0.9rem;
         }
 
         input:focus, select:focus, textarea:focus {
@@ -92,7 +77,6 @@
             margin-bottom: 6px;
             display: block;
             font-size: 0.8rem;
-            letter-spacing: 1px;
         }
 
         .form-group {
@@ -131,12 +115,6 @@
 
         th {
             color: #f0f;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        td {
-            font-size: 0.8rem;
         }
 
         .status-badge {
@@ -144,7 +122,6 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
-            font-weight: bold;
             display: inline-block;
         }
 
@@ -153,16 +130,13 @@
             border: 1px solid #ff3366;
             color: #ff6699;
             cursor: pointer;
-            font-size: 1rem;
             padding: 5px 12px;
             border-radius: 20px;
-            transition: 0.2s;
         }
 
         .delete-btn:hover {
             background: #ff3366;
             color: #000;
-            transform: scale(1.05);
         }
 
         .header-cyber {
@@ -202,25 +176,23 @@
             body { padding: 12px; }
             .glass-card { padding: 16px; }
             th, td { padding: 8px 4px; font-size: 0.7rem; }
-            .btn-cyber { padding: 8px 16px; font-size: 0.8rem; }
-            .header-cyber h1 { font-size: 1.3rem; }
         }
 
         .alert {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #0ff;
+            background: #0f0;
             color: #000;
             padding: 12px 20px;
             border-radius: 10px;
-            animation: slideIn 0.3s ease;
             z-index: 1000;
+            animation: slideIn 0.3s ease;
         }
 
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
         }
     </style>
 </head>
@@ -242,15 +214,15 @@
                 <h2 style="border-left: 5px solid #f0f; padding-left: 15px; margin-bottom: 20px;">✍️ TAMBAH DATA JAGA</h2>
                 <form id="shiftForm">
                     <div class="form-group">
-                        <label>👤 NAMA LENGKAP</label>
+                        <label>👤 NAMA LENGKAP *</label>
                         <input type="text" id="namaLengkap" placeholder="Contoh: Andika Pratama" required>
                     </div>
                     <div class="form-group">
-                        <label>📅 TANGGAL</label>
+                        <label>📅 TANGGAL *</label>
                         <input type="date" id="tanggal" required>
                     </div>
                     <div class="form-group">
-                        <label>⚙️ STATUS JAGA</label>
+                        <label>⚙️ STATUS JAGA *</label>
                         <select id="statusJaga" required>
                             <option value="Pagi">🌞 PAGI (07:00 - 19:00)</option>
                             <option value="Malam">🌙 MALAM (19:00 - 07:00)</option>
@@ -260,8 +232,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>📝 CATATAN (Optional)</label>
-                        <textarea id="catatan" rows="2" placeholder="Shift khusus, lembur, keterangan tambahan..."></textarea>
+                        <label>📝 CATATAN</label>
+                        <textarea id="catatan" rows="2" placeholder="Keterangan tambahan..."></textarea>
                     </div>
                     <button type="submit" class="btn-cyber" style="width:100%">💾 SIMPAN DATA SHIFT</button>
                 </form>
@@ -276,11 +248,11 @@
                     <input type="text" id="filterNama" placeholder="🔍 Filter Nama...">
                     <select id="filterShift">
                         <option value="">Semua Shift</option>
-                        <option value="Pagi">🌞 Pagi</option>
-                        <option value="Malam">🌙 Malam</option>
-                        <option value="OFF">💤 OFF</option>
-                        <option value="Cuti">🏖️ Cuti</option>
-                        <option value="Tanggal Merah">🔴 Tanggal Merah</option>
+                        <option value="Pagi">Pagi</option>
+                        <option value="Malam">Malam</option>
+                        <option value="OFF">OFF</option>
+                        <option value="Cuti">Cuti</option>
+                        <option value="Tanggal Merah">Tanggal Merah</option>
                     </select>
                     <button id="clearFilter" class="btn-cyber">⟳ Reset</button>
                 </div>
@@ -301,14 +273,14 @@
                         </tbody>
                     </table>
                 </div>
-                <div id="statsPanel" style="margin-top: 15px; font-size: 12px; text-align: center; color: #6cf;"></div>
+                <div id="infoPanel" style="margin-top: 15px; text-align: center; font-size: 12px; color: #6cf;"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // CEK LOGIN - Redirect jika belum login
-        (function checkAuth() {
+        // CEK LOGIN
+        (function() {
             const isLoggedIn = sessionStorage.getItem('admin_logged_in');
             if (!isLoggedIn || isLoggedIn !== 'true') {
                 window.location.href = 'admin-login.html';
@@ -317,7 +289,6 @@
 
         let shiftData = [];
 
-        // Fungsi jam jaga
         function getJamRange(status) {
             const map = {
                 'Pagi': '07:00 - 19:00',
@@ -329,15 +300,13 @@
             return map[status] || '—';
         }
 
-        // Format tanggal
         function formatTanggal(dateStr) {
             if (!dateStr) return '-';
-            const parts = dateStr.split('-');
+            let parts = dateStr.split('-');
             if (parts.length !== 3) return dateStr;
             return `${parts[2]}/${parts[1]}/${parts[0]}`;
         }
 
-        // Escape HTML
         function escapeHtml(str) {
             if (!str) return '';
             return str.replace(/[&<>]/g, function(m) {
@@ -348,9 +317,21 @@
             });
         }
 
-        // Load data
+        function showAlert(message, isError = false) {
+            const alert = document.createElement('div');
+            alert.className = 'alert';
+            alert.style.background = isError ? '#ff3366' : '#0f0';
+            alert.style.color = '#000';
+            alert.innerHTML = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 2000);
+        }
+
+        // Load data dari localStorage
         function loadData() {
             const stored = localStorage.getItem('cyber_jaga_db');
+            console.log('Admin panel - Loaded:', stored);
+            
             if (stored) {
                 try {
                     shiftData = JSON.parse(stored);
@@ -363,27 +344,28 @@
                 shiftData = [];
             }
             renderTable();
-            updateStats();
+            updateInfo();
         }
 
-        // Save data
+        // Simpan ke localStorage
         function saveData() {
             localStorage.setItem('cyber_jaga_db', JSON.stringify(shiftData));
-            renderTable();
-            updateStats();
+            console.log('Admin panel - Saved:', shiftData.length, 'items');
+            
             // Trigger storage event untuk halaman utama
-            window.dispatchEvent(new StorageEvent('storage', { key: 'cyber_jaga_db' }));
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: 'cyber_jaga_db',
+                newValue: JSON.stringify(shiftData)
+            }));
         }
 
-        // Update statistik
-        function updateStats() {
-            const statsDiv = document.getElementById('statsPanel');
-            if (!statsDiv) return;
-            const total = shiftData.length;
-            statsDiv.innerHTML = `📊 Total Data: ${total} | 🗑️ Klik tombol hapus untuk menghapus data`;
+        function updateInfo() {
+            const infoDiv = document.getElementById('infoPanel');
+            if (infoDiv) {
+                infoDiv.innerHTML = `📊 Total Data: ${shiftData.length} data shift tersimpan | Klik 🗑️ untuk hapus`;
+            }
         }
 
-        // Render tabel
         function renderTable() {
             const filterNama = document.getElementById('filterNama')?.value.toLowerCase() || '';
             const filterShiftVal = document.getElementById('filterShift')?.value || '';
@@ -402,7 +384,7 @@
             if (!tbody) return;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">⚡ Tidak ada data shift ⚡</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px;">⚡ Tidak ada data shift ⚡</td></tr>';
                 return;
             }
 
@@ -423,24 +405,15 @@
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const id = parseInt(btn.getAttribute('data-id'));
-                    if (confirm('⚠️ Yakin ingin menghapus data shift ini?')) {
+                    if (confirm('Yakin ingin menghapus data ini?')) {
                         shiftData = shiftData.filter(d => d.id !== id);
                         saveData();
-                        showAlert('✅ Data berhasil dihapus!', 'success');
+                        renderTable();
+                        updateInfo();
+                        showAlert('✅ Data berhasil dihapus!');
                     }
                 });
             });
-        }
-
-        // Show alert notifikasi
-        function showAlert(message, type = 'success') {
-            const alert = document.createElement('div');
-            alert.className = 'alert';
-            alert.style.background = type === 'success' ? '#0f0' : '#f33';
-            alert.style.color = '#000';
-            alert.innerHTML = message;
-            document.body.appendChild(alert);
-            setTimeout(() => alert.remove(), 2000);
         }
 
         // Tambah data
@@ -453,11 +426,11 @@
             const catatan = document.getElementById('catatan').value.trim();
 
             if (!nama) {
-                alert('❌ Nama lengkap wajib diisi!');
+                showAlert('❌ Nama lengkap wajib diisi!', true);
                 return;
             }
             if (!tanggal) {
-                alert('❌ Tanggal wajib diisi!');
+                showAlert('❌ Tanggal wajib diisi!', true);
                 return;
             }
 
@@ -476,27 +449,30 @@
             // Reset form
             document.getElementById('shiftForm').reset();
             document.getElementById('catatan').value = '';
+            // Set tanggal hari ini
+            document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
             
+            renderTable();
+            updateInfo();
             showAlert('✅ Data shift berhasil disimpan!');
         }
 
         // Reset semua data
         function resetAllData() {
-            if (confirm('⚠️ PERINGATAN! Ini akan menghapus SEMUA data shift secara permanen. Yakin?')) {
+            if (confirm('⚠️ PERINGATAN! Ini akan menghapus SEMUA data shift. Yakin?')) {
                 shiftData = [];
                 saveData();
+                renderTable();
+                updateInfo();
                 showAlert('⚠️ Semua data telah direset!');
             }
         }
 
-        // Logout
         function logout() {
             sessionStorage.removeItem('admin_logged_in');
-            sessionStorage.removeItem('admin_login_time');
             window.location.href = 'admin-login.html';
         }
 
-        // Setup filter
         function setupFilters() {
             const filterNama = document.getElementById('filterNama');
             const filterShift = document.getElementById('filterShift');
