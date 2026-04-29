@@ -20,13 +20,12 @@
         }
 
         .glass-card {
-            background: rgba(10, 20, 30, 0.75);
+            background: rgba(10, 20, 30, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 255, 255, 0.4);
             border-radius: 28px;
             box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
             padding: 28px;
-            transition: all 0.3s ease;
         }
 
         .btn-cyber {
@@ -40,7 +39,6 @@
             transition: 0.2s;
             text-decoration: none;
             display: inline-block;
-            font-size: 0.9rem;
         }
 
         .btn-cyber:hover {
@@ -61,13 +59,12 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 2px;
         }
 
         .filter-section {
             display: flex;
             gap: 12px;
-            margin: 20px 0 25px 0;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
 
@@ -79,7 +76,6 @@
             color: #0ff;
             flex: 1;
             outline: none;
-            font-size: 0.9rem;
         }
 
         input:focus, select:focus {
@@ -101,17 +97,10 @@
         th {
             color: #f0f;
             font-weight: bold;
-            text-shadow: 0 0 3px magenta;
-            font-size: 0.85rem;
-        }
-
-        td {
-            font-size: 0.85rem;
         }
 
         .scroll-table {
             overflow-x: auto;
-            border-radius: 16px;
         }
 
         .status-badge {
@@ -119,22 +108,14 @@
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: bold;
             display: inline-block;
         }
-
-        .status-Pagi { border-left: 3px solid #0ff; }
-        .status-Malam { border-left: 3px solid #f0f; }
-        .status-OFF { border-left: 3px solid #ffa500; }
-        .status-Cuti { border-left: 3px solid #0f0; }
-        .status-Tanggal-Merah { border-left: 3px solid #f00; }
 
         @media (max-width: 768px) {
             body { padding: 12px; }
             .glass-card { padding: 16px; }
             th, td { padding: 8px 4px; font-size: 0.7rem; }
             .btn-cyber { padding: 8px 16px; font-size: 0.8rem; }
-            .header-cyber h1 { font-size: 1.5rem; }
         }
 
         .admin-fab {
@@ -147,7 +128,6 @@
         .stats {
             display: flex;
             gap: 15px;
-            justify-content: space-between;
             margin-top: 20px;
             padding-top: 20px;
             border-top: 1px solid rgba(0, 255, 255, 0.3);
@@ -159,6 +139,12 @@
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.8rem;
+        }
+
+        .empty-row {
+            text-align: center;
+            padding: 40px;
+            color: #6cf;
         }
     </style>
 </head>
@@ -179,7 +165,8 @@
                 <option value="Cuti">🏖️ Cuti</option>
                 <option value="Tanggal Merah">🔴 Tanggal Merah</option>
             </select>
-            <button id="clearFilter" class="btn-cyber">⟳ Reset Filter</button>
+            <button id="clearFilter" class="btn-cyber">⟳ Reset</button>
+            <button id="refreshData" class="btn-cyber">🔄 Refresh</button>
         </div>
 
         <div class="scroll-table">
@@ -194,15 +181,12 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <tr><td colspan="5" style="text-align:center">🔄 Memuat data shift...</td></tr>
+                    <tr><td colspan="5" style="text-align:center">🔄 Memuat data shift......</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="stats" id="statsArea">
-            <!-- Stats akan diisi JavaScript -->
-        </div>
-
+        <div class="stats" id="statsArea"></div>
         <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #6cf;">
             💾 Data tersimpan di LocalStorage | © CyberShift System
         </div>
@@ -216,7 +200,7 @@
         // Variabel global
         let shiftData = [];
 
-        // Fungsi mendapatkan jam jaga berdasarkan status
+        // Fungsi mendapatkan jam jaga
         function getJamRange(status) {
             const jamMap = {
                 'Pagi': '07:00 - 19:00',
@@ -231,7 +215,7 @@
         // Format tanggal
         function formatTanggal(dateStr) {
             if (!dateStr) return '-';
-            const parts = dateStr.split('-');
+            let parts = dateStr.split('-');
             if (parts.length !== 3) return dateStr;
             return `${parts[2]}/${parts[1]}/${parts[0]}`;
         }
@@ -248,32 +232,36 @@
         }
 
         // Load data dari localStorage
-        function loadDataFromStorage() {
+        function loadData() {
             const stored = localStorage.getItem('cyber_jaga_db');
+            console.log('Loaded from storage:', stored); // Debug
+            
             if (stored) {
                 try {
                     shiftData = JSON.parse(stored);
                     if (!Array.isArray(shiftData)) shiftData = [];
                 } catch(e) {
-                    console.error('Error parsing data:', e);
+                    console.error('Error parsing:', e);
                     shiftData = [];
                 }
             } else {
-                // Data contoh jika kosong
+                // Data contoh untuk testing
                 shiftData = [
                     { id: Date.now() + 1, nama: "Budi Santoso", tanggal: "2025-04-28", status: "Pagi", catatan: "Shift normal" },
                     { id: Date.now() + 2, nama: "Citra Dewi", tanggal: "2025-04-28", status: "Malam", catatan: "Waspada" },
                     { id: Date.now() + 3, nama: "Dedi Kurniawan", tanggal: "2025-04-29", status: "OFF", catatan: "Istirahat" }
                 ];
-                saveToLocalStorage();
+                saveData();
             }
+            
             renderTable();
             updateStats();
         }
 
         // Simpan ke localStorage
-        function saveToLocalStorage() {
+        function saveData() {
             localStorage.setItem('cyber_jaga_db', JSON.stringify(shiftData));
+            console.log('Data saved:', shiftData.length, 'items'); // Debug
         }
 
         // Update statistik
@@ -289,11 +277,11 @@
                 <div class="stat-item">📊 Total Data: ${total}</div>
                 <div class="stat-item">🌞 Shift Pagi: ${pagi}</div>
                 <div class="stat-item">🌙 Shift Malam: ${malam}</div>
-                <div class="stat-item">📅 Update Real-time</div>
+                <div class="stat-item">🔄 Auto-sync: ON</div>
             `;
         }
 
-        // Render tabel dengan filter
+        // Render tabel
         function renderTable() {
             const filterNama = document.getElementById('filterNama')?.value.toLowerCase() || '';
             const filterShiftVal = document.getElementById('filterShift')?.value || '';
@@ -307,75 +295,61 @@
                 filtered = filtered.filter(item => item.status === filterShiftVal);
             }
 
-            // Urutkan berdasarkan tanggal terbaru
             filtered.sort((a, b) => (b.tanggal || '').localeCompare(a.tanggal || ''));
 
             const tbody = document.getElementById('tableBody');
             if (!tbody) return;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">⚡ Tidak ada data shift yang ditemukan ⚡</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:40px;">⚡ Tidak ada data shift ⚡</td></tr>';
                 return;
             }
 
-            tbody.innerHTML = filtered.map(item => {
-                let statusClass = '';
-                if (item.status === 'Pagi') statusClass = 'status-Pagi';
-                else if (item.status === 'Malam') statusClass = 'status-Malam';
-                else if (item.status === 'OFF') statusClass = 'status-OFF';
-                else if (item.status === 'Cuti') statusClass = 'status-Cuti';
-                else if (item.status === 'Tanggal Merah') statusClass = 'status-Tanggal-Merah';
-                
-                return `
-                    <tr class="${statusClass}">
-                        <td><strong>${escapeHtml(item.nama)}</strong></td>
-                        <td>${formatTanggal(item.tanggal)}</td>
-                        <td><span class="status-badge">${item.status}</span></td>
-                        <td>${getJamRange(item.status)}</td>
-                        <td>${escapeHtml(item.catatan || '-')}</td>
-                    </tr>
-                `;
-            }).join('');
+            tbody.innerHTML = filtered.map(item => `
+                <tr>
+                    <td><strong>${escapeHtml(item.nama)}</strong></td>
+                    <td>${formatTanggal(item.tanggal)}</td>
+                    <td><span class="status-badge">${item.status}</span></td>
+                    <td>${getJamRange(item.status)}</td>
+                    <td>${escapeHtml(item.catatan || '-')}</td>
+                </tr>
+            `).join('');
         }
 
-        // Setup event listeners
+        // Event listeners
         function setupEventListeners() {
             const filterNama = document.getElementById('filterNama');
             const filterShift = document.getElementById('filterShift');
             const clearBtn = document.getElementById('clearFilter');
+            const refreshBtn = document.getElementById('refreshData');
 
-            if (filterNama) {
-                filterNama.addEventListener('input', () => {
-                    renderTable();
-                    updateStats();
-                });
-            }
-            if (filterShift) {
-                filterShift.addEventListener('change', () => {
-                    renderTable();
-                    updateStats();
-                });
-            }
+            if (filterNama) filterNama.addEventListener('input', renderTable);
+            if (filterShift) filterShift.addEventListener('change', renderTable);
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     if (filterNama) filterNama.value = '';
                     if (filterShift) filterShift.value = '';
                     renderTable();
-                    updateStats();
+                });
+            }
+            if (refreshBtn) {
+                refreshBtn.addEventListener('click', () => {
+                    loadData();
                 });
             }
         }
 
-        // Listen untuk storage changes dari halaman lain
+        // Listen untuk perubahan storage dari halaman lain
         window.addEventListener('storage', (e) => {
             if (e.key === 'cyber_jaga_db') {
-                loadDataFromStorage();
+                console.log('Storage changed from another tab');
+                loadData();
             }
         });
 
         // Inisialisasi
         window.addEventListener('DOMContentLoaded', () => {
-            loadDataFromStorage();
+            loadData();
             setupEventListeners();
         });
     </script>
