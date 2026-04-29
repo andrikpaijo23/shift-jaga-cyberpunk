@@ -3,384 +3,245 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>⚡ SHIFT JAGA - CYBERPUNK EDITION</title>
+  <title>Shift Jaga | Cyberpunk</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: 'Courier New', 'Fira Code', monospace;
     }
 
     body {
       background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
-      font-family: 'Courier New', 'Fira Code', monospace;
       color: #0ff;
       padding: 20px;
-      min-height: 100vh;
     }
 
-    /* neon container */
+    /* Gaya Cyberpunk */
     .container {
       max-width: 1400px;
       margin: 0 auto;
     }
 
-    /* header cyber */
-    h1 {
-      text-align: center;
-      font-size: 2.7rem;
-      letter-spacing: 5px;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
-      margin-bottom: 20px;
-      word-break: keep-all;
-      animation: flicker 3s infinite;
-    }
-
-    @keyframes flicker {
-      0% { opacity: 1; text-shadow: 0 0 2px #0ff; }
-      50% { opacity: 0.9; text-shadow: 0 0 8px #f0f, 0 0 12px #0ff; }
-      100% { opacity: 1; text-shadow: 0 0 2px #0ff; }
-    }
-
-    /* card cyber */
-    .card {
-      background: rgba(10, 20, 30, 0.7);
-      backdrop-filter: blur(10px);
+    .neon-card {
+      background: rgba(10, 20, 30, 0.65);
+      backdrop-filter: blur(12px);
       border: 1px solid #0ff;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
-      border-radius: 20px;
-      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0 0 15px #0ff4, 0 0 5px #0ff2;
+      padding: 24px;
       margin-bottom: 30px;
-      transition: all 0.3s;
+      transition: 0.3s;
+    }
+
+    .neon-card:hover {
+      box-shadow: 0 0 30px #0ff, 0 0 10px #0ff;
+    }
+
+    h1, h2 {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
+      margin-bottom: 20px;
     }
 
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
     }
 
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
     label {
       font-weight: bold;
       letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      color: #f0f;
     }
 
-    input, select, button {
-      background: #111922;
+    input, select {
+      background: #0a0f1ecc;
       border: 1px solid #0ff;
-      padding: 12px 15px;
-      border-radius: 12px;
-      font-family: monospace;
-      font-size: 1rem;
+      padding: 12px;
+      border-radius: 16px;
       color: #0ff;
+      font-size: 1rem;
       outline: none;
       transition: 0.2s;
     }
 
     input:focus, select:focus {
+      box-shadow: 0 0 12px #0ff;
       border-color: #f0f;
-      box-shadow: 0 0 8px #f0f;
     }
 
     button {
-      background: linear-gradient(45deg, #0ff, #f0f);
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
+      background: linear-gradient(90deg, #0ff, #f0f);
       border: none;
-      transition: transform 0.2s, box-shadow 0.2s;
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #000;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 15px #0ff;
     }
 
     button:hover {
       transform: scale(1.02);
-      box-shadow: 0 0 15px #0ff;
-    }
-
-    .btn-danger {
-      background: linear-gradient(45deg, #f44, #a00);
-      color: white;
-    }
-
-    /* tabel data */
-    .table-wrapper {
-      overflow-x: auto;
-      border-radius: 20px;
+      box-shadow: 0 0 25px #f0f;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.85rem;
+      overflow-x: auto;
+      display: block;
     }
 
     th, td {
-      padding: 12px 8px;
+      padding: 12px;
       text-align: left;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      border-bottom: 1px solid #0ff3;
     }
 
     th {
-      background: #0a1222;
-      color: #f0f;
-      text-transform: uppercase;
-    }
-
-    tr:hover {
-      background: rgba(0, 255, 255, 0.1);
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .edit-btn, .delete-btn {
-      padding: 5px 12px;
-      font-size: 0.7rem;
-      border-radius: 20px;
-    }
-
-    .edit-btn { background: #2a6; color: black; }
-    .delete-btn { background: #f44; color: white; }
-
-    @media (max-width: 760px) {
-      h1 { font-size: 1.8rem; }
-      .form-grid { grid-template-columns: 1fr; }
-      th, td { font-size: 0.7rem; padding: 8px 4px; }
+      background: #0ff2;
+      color: #0ff;
+      text-shadow: 0 0 2px #0ff;
     }
 
     .status-badge {
+      padding: 4px 12px;
+      border-radius: 30px;
       font-weight: bold;
-      text-shadow: 0 0 2px;
+      background: #0a0f1e;
+      display: inline-block;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      font-size: 0.7rem;
-      color: #6af;
+    .merah { color: #f66; text-shadow: 0 0 3px red; }
+    .footer { text-align: center; margin-top: 30px; font-size: 12px; opacity: 0.7; }
+
+    @media (max-width: 700px) {
+      .neon-card { padding: 16px; }
+      th, td { font-size: 12px; padding: 8px; }
     }
   </style>
 </head>
 <body>
 <div class="container">
-  <h1>⚡ SHIFT JAGA TERMINAL ⚡</h1>
-
-  <div class="card">
-    <form id="shiftForm">
-      <div class="form-grid">
-        <div class="input-group">
-          <label>👤 Nama Lengkap</label>
-          <input type="text" id="nama" required placeholder="Nama lengkap..." />
-        </div>
-        <div class="input-group">
-          <label>🕒 Shift</label>
-          <select id="shift">
-            <option value="Pagi">🌞 Pagi (07:00 - 19:00)</option>
-            <option value="Malam">🌙 Malam (19:00 - 07:00)</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>📅 Tanggal</label>
-          <input type="date" id="tanggal" required />
-        </div>
-        <div class="input-group">
-          <label>🟢 Status Kerja</label>
-          <select id="status">
-            <option value="Masuk">✅ Masuk</option>
-            <option value="Off">🔴 Off</option>
-            <option value="Cuti">🌴 Cuti</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>🔴 Tanggal Merah</label>
-          <select id="tanggalMerah">
-            <option value="false">❌ Tidak</option>
-            <option value="true">✅ Ya</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>🆔 ID (untuk edit)</label>
-          <input type="text" id="editId" placeholder="Otomatis ketika edit" readonly />
-        </div>
-      </div>
-      <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
-        <button type="submit" id="btnSimpan">💾 SIMPAN DATA</button>
-        <button type="button" id="btnReset" class="btn-danger">🗑️ RESET FORM</button>
-      </div>
-    </form>
+  <div class="neon-card">
+    <h1>⚡ SHIFT JAGA - CYBERPUNK ⚡</h1>
+    <div class="form-grid">
+      <div class="input-group"><label>👤 Nama Lengkap</label><input type="text" id="nama" placeholder="Andi Wijaya" required></div>
+      <div class="input-group"><label>⏰ Shift Jaga</label><select id="shift"><option value="Pagi">Pagi (07:00-19:00)</option><option value="Malam">Malam (19:00-07:00)</option></select></div>
+      <div class="input-group"><label>📌 Status</label><select id="status"><option value="Masuk">Masuk</option><option value="Off">Off</option><option value="Cuti">Cuti</option></select></div>
+      <div class="input-group"><label>🔴 Tanggal Merah</label><select id="merah"><option value="false">Tidak</option><option value="true">Ya (Libur Nasional)</option></select></div>
+      <div class="input-group"><label>📅 Hari & Tanggal Otomatis</label><input type="text" id="hariOtomatis" readonly></div>
+      <div class="input-group"><label>📆 Tanggal</label><input type="text" id="tglOtomatis" readonly></div>
+      <div class="input-group"><label>🗓️ Bulan Tahun</label><input type="text" id="blnOtomatis" readonly></div>
+    </div>
+    <div style="margin-top: 25px; text-align: center;"><button id="simpanBtn">💾 SIMPAN SHIFT</button></div>
   </div>
 
-  <div class="card">
-    <h3 style="margin-bottom: 15px;">📋 DATABASE SHIFT JAGA</h3>
-    <div class="table-wrapper">
+  <div class="neon-card">
+    <h2>📋 DATA SHIFT TERSIMPAN</h2>
+    <div style="overflow-x: auto;">
       <table id="dataTable">
         <thead>
-          <tr><th>Nama</th><th>Shift</th><th>Tanggal</th><th>Hari</th><th>Status</th><th>Merah</th><th>Aksi</th></tr>
+          <tr><th>Nama</th><th>Shift</th><th>Status</th><th>Tanggal Merah</th><th>Hari</th><th>Tanggal</th><th>Bulan/Tahun</th></tr>
         </thead>
-        <tbody id="tableBody">
-          <tr><td colspan="7" style="text-align:center">Memuat data...</td></tr>
-        </tbody>
+        <tbody id="tableBody"><tr><td colspan="7" style="text-align:center">Memuat data...</td></tr></tbody>
       </table>
     </div>
   </div>
-  <footer>⚡ CYBER SHIFT SYSTEM • DATA TERSIMPAN DI GOOGLE SHEETS ⚡</footer>
+  <div class="footer">⚙️ CYBERPUNK SHIFT SYSTEM | DATA REAL-TIME</div>
 </div>
 
 <script>
-  // GANTI DENGAN URL WEB APP ANDA !!!
-  const API_URL = "https://script.google.com/macros/s/AKfycbz3b4r7O6mIs2AP1kJN-dnmxJ9yocsUgGUVUqkzBFQZ1-gd8doo5LkHWVzhrmhP6O8p/exec"; 
+  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxJ4ZQC2IPX-k5LEMFHbCCsw_sT7lFRPowEPkdenwb5ocK004Ha_sml2iITd3MsQtQp4A/exec'; // GANTI DENGAN URL DEPLOY KAMU
 
-  // Helper fetch dengan form-urlencoded (simple request)
-  async function apiCall(action, params = {}) {
-    const formData = new URLSearchParams();
-    formData.append("action", action);
-    for (let [key, val] of Object.entries(params)) {
-      formData.append(key, String(val));
-    }
-    const response = await fetch(API_URL, {
-      method: "POST",
-      body: formData,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    });
-    return await response.json();
+  // Set otomatis tanggal sekarang
+  function updateDateTime() {
+    const now = new Date();
+    const hariArr = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+    const bulanArr = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+    const hari = hariArr[now.getDay()];
+    const tanggal = now.getDate();
+    const bulanTahun = `${bulanArr[now.getMonth()]} ${now.getFullYear()}`;
+    document.getElementById('hariOtomatis').value = hari;
+    document.getElementById('tglOtomatis').value = tanggal;
+    document.getElementById('blnOtomatis').value = bulanTahun;
   }
+  updateDateTime();
 
+  // Load data dari Google Sheets
   async function loadData() {
     try {
-      const res = await fetch(API_URL); // GET all data
-      const data = await res.json();
-      const tbody = document.getElementById("tableBody");
-      if (!Array.isArray(data) || data.length === 0) {
-        tbody.innerHTML = "<tr><td colspan='7'>📭 Belum ada data shift</td></tr>";
+      const response = await fetch(WEB_APP_URL + '?action=getAll');
+      const data = await response.json();
+      const tbody = document.getElementById('tableBody');
+      if (!data || data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7">Belum ada data shift</td></tr>';
         return;
       }
-      tbody.innerHTML = "";
-      data.forEach(record => {
-        const row = tbody.insertRow();
-        row.insertCell(0).innerText = record.NamaLengkap || "-";
-        row.insertCell(1).innerText = record.Shift || "-";
-        row.insertCell(2).innerText = record.Tanggal || "-";
-        row.insertCell(3).innerText = record.Hari || "-";
-        row.insertCell(4).innerHTML = `<span class="status-badge">${record.Status}</span>`;
-        row.insertCell(5).innerText = record.TanggalMerah === "Ya" ? "🔴 Ya" : "⚪ Tidak";
-        const aksi = row.insertCell(6);
-        aksi.className = "action-buttons";
-        aksi.innerHTML = `<button class="edit-btn" data-id="${record.ID}">✏️ Edit</button>
-                          <button class="delete-btn" data-id="${record.ID}">🗑️ Hapus</button>`;
-      });
-      // event listener untuk edit & delete
-      document.querySelectorAll(".edit-btn").forEach(btn => {
-        btn.addEventListener("click", async (e) => {
-          const id = btn.getAttribute("data-id");
-          await editRecordById(id);
-        });
-      });
-      document.querySelectorAll(".delete-btn").forEach(btn => {
-        btn.addEventListener("click", async (e) => {
-          const id = btn.getAttribute("data-id");
-          if (confirm("Hapus data ini?")) {
-            const result = await apiCall("delete", { id });
-            if (result.success) {
-              alert("✅ Data terhapus");
-              loadData();
-              resetForm();
-            } else alert("Gagal hapus: " + result.error);
-          }
-        });
+      tbody.innerHTML = '';
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        const merahClass = row['TanggalMerah'] === 'Ya' ? 'merah' : '';
+        tr.innerHTML = `
+          <td>${row['NamaLengkap'] || '-'}</td>
+          <td>${row['Shift'] || '-'}</td>
+          <td><span class="status-badge">${row['Status'] || '-'}</span></td>
+          <td class="${merahClass}">${row['TanggalMerah'] || 'Tidak'}</td>
+          <td>${row['Hari'] || '-'}</td>
+          <td>${row['Tanggal'] || '-'}</td>
+          <td>${row['BulanTahun'] || '-'}</td>
+        `;
+        tbody.appendChild(tr);
       });
     } catch (err) {
       console.error(err);
-      document.getElementById("tableBody").innerHTML = "<tr><td colspan='7'>❌ Gagal memuat data</td></tr>";
+      document.getElementById('tableBody').innerHTML = '<tr><td colspan="7">Gagal memuat data</td></tr>';
     }
   }
 
-  async function editRecordById(id) {
-    // ambil data dari tabel dengan fetch langsung karena kita punya API get all
-    const res = await fetch(API_URL);
-    const allData = await res.json();
-    const record = allData.find(r => r.ID === id);
-    if (!record) return alert("Data tidak ditemukan");
-    document.getElementById("nama").value = record.NamaLengkap;
-    document.getElementById("shift").value = record.Shift;
-    document.getElementById("tanggal").value = record.Tanggal;
-    document.getElementById("status").value = record.Status;
-    document.getElementById("tanggalMerah").value = record.TanggalMerah === "Ya" ? "true" : "false";
-    document.getElementById("editId").value = record.ID;
-    // ubah tombol simpan sementara untuk update
-    const simpanBtn = document.getElementById("btnSimpan");
-    simpanBtn.innerText = "🔄 UPDATE DATA";
-    simpanBtn.onclick = async (e) => {
-      e.preventDefault();
-      const updatePayload = {
-        id: record.ID,
-        nama: document.getElementById("nama").value,
-        shift: document.getElementById("shift").value,
-        tanggal: document.getElementById("tanggal").value,
-        status: document.getElementById("status").value,
-        tanggalMerah: document.getElementById("tanggalMerah").value
-      };
-      const result = await apiCall("update", updatePayload);
-      if (result.success) {
-        alert("Data diperbarui!");
-        loadData();
-        resetForm();
-        simpanBtn.innerText = "💾 SIMPAN DATA";
-        simpanBtn.onclick = submitNewData;
-      } else alert("Update gagal: " + result.error);
-    };
-  }
-
-  async function submitNewData(e) {
-    e.preventDefault();
+  // Simpan data baru
+  async function simpanShift() {
+    const nama = document.getElementById('nama').value.trim();
+    if (!nama) return alert('Nama harus diisi!');
     const payload = {
-      nama: document.getElementById("nama").value,
-      shift: document.getElementById("shift").value,
-      tanggal: document.getElementById("tanggal").value,
-      status: document.getElementById("status").value,
-      tanggalMerah: document.getElementById("tanggalMerah").value
+      nama: nama,
+      shift: document.getElementById('shift').value,
+      status: document.getElementById('status').value,
+      tanggalMerah: document.getElementById('merah').value === 'true',
+      hari: document.getElementById('hariOtomatis').value,
+      tanggal: document.getElementById('tglOtomatis').value,
+      bulanTahun: document.getElementById('blnOtomatis').value
     };
-    if (!payload.nama || !payload.tanggal) return alert("Nama dan tanggal wajib diisi!");
-    const result = await apiCall("add", payload);
-    if (result.success) {
-      alert("Data tersimpan dengan ID: " + result.id);
-      loadData();
-      resetForm();
-    } else {
-      alert("Error: " + result.error);
+    try {
+      const response = await fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors', // karena Google Apps Script tidak support CORS complex, kita pakai trick
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ action: 'save', data: JSON.stringify(payload) })
+      });
+      alert('✅ Data shift tersimpan!');
+      setTimeout(() => loadData(), 500);
+      document.getElementById('nama').value = '';
+    } catch (err) {
+      alert('Gagal simpan: ' + err.message);
     }
   }
 
-  function resetForm() {
-    document.getElementById("shiftForm").reset();
-    document.getElementById("editId").value = "";
-    const simpanBtn = document.getElementById("btnSimpan");
-    simpanBtn.innerText = "💾 SIMPAN DATA";
-    simpanBtn.onclick = submitNewData;
-    // set default tanggal hari ini
-    if (!document.getElementById("tanggal").value) {
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById("tanggal").value = today;
-    }
-  }
-
-  // event init
-  window.onload = () => {
-    resetForm();
-    loadData();
-    document.getElementById("btnReset").onclick = resetForm;
-    document.getElementById("btnSimpan").onclick = submitNewData;
-  };
+  document.getElementById('simpanBtn').addEventListener('click', simpanShift);
+  window.onload = () => { loadData(); };
 </script>
 </body>
 </html>
