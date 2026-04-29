@@ -406,4 +406,127 @@
                 return;
             }
 
-            tbody.innerHTML
+            tbody.innerHTML = filtered.map(item => `
+                <tr>
+                    <td><strong>${escapeHtml(item.nama)}</strong></td>
+                    <td>${formatTanggal(item.tanggal)}</td>
+                    <td><span class="status-badge">${escapeHtml(item.status)}</span></td>
+                    <td>${getJamRange(item.status)}</td>
+                    <td>${escapeHtml(item.catatan || '-')}</td>
+                    <td>
+                        <button class="delete-btn" data-id="${item.id}">🗑️ Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Event delete
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.getAttribute('data-id'));
+                    if (confirm('⚠️ Yakin ingin menghapus data shift ini?')) {
+                        shiftData = shiftData.filter(d => d.id !== id);
+                        saveData();
+                        showAlert('✅ Data berhasil dihapus!', 'success');
+                    }
+                });
+            });
+        }
+
+        // Show alert notifikasi
+        function showAlert(message, type = 'success') {
+            const alert = document.createElement('div');
+            alert.className = 'alert';
+            alert.style.background = type === 'success' ? '#0f0' : '#f33';
+            alert.style.color = '#000';
+            alert.innerHTML = message;
+            document.body.appendChild(alert);
+            setTimeout(() => alert.remove(), 2000);
+        }
+
+        // Tambah data
+        function addShift(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('namaLengkap').value.trim();
+            const tanggal = document.getElementById('tanggal').value;
+            const status = document.getElementById('statusJaga').value;
+            const catatan = document.getElementById('catatan').value.trim();
+
+            if (!nama) {
+                alert('❌ Nama lengkap wajib diisi!');
+                return;
+            }
+            if (!tanggal) {
+                alert('❌ Tanggal wajib diisi!');
+                return;
+            }
+
+            const newShift = {
+                id: Date.now(),
+                nama: nama,
+                tanggal: tanggal,
+                status: status,
+                catatan: catatan || '',
+                createdAt: new Date().toISOString()
+            };
+            
+            shiftData.unshift(newShift);
+            saveData();
+            
+            // Reset form
+            document.getElementById('shiftForm').reset();
+            document.getElementById('catatan').value = '';
+            
+            showAlert('✅ Data shift berhasil disimpan!');
+        }
+
+        // Reset semua data
+        function resetAllData() {
+            if (confirm('⚠️ PERINGATAN! Ini akan menghapus SEMUA data shift secara permanen. Yakin?')) {
+                shiftData = [];
+                saveData();
+                showAlert('⚠️ Semua data telah direset!');
+            }
+        }
+
+        // Logout
+        function logout() {
+            sessionStorage.removeItem('admin_logged_in');
+            sessionStorage.removeItem('admin_login_time');
+            window.location.href = 'admin-login.html';
+        }
+
+        // Setup filter
+        function setupFilters() {
+            const filterNama = document.getElementById('filterNama');
+            const filterShift = document.getElementById('filterShift');
+            const clearBtn = document.getElementById('clearFilter');
+
+            if (filterNama) filterNama.addEventListener('input', renderTable);
+            if (filterShift) filterShift.addEventListener('change', renderTable);
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    if (filterNama) filterNama.value = '';
+                    if (filterShift) filterShift.value = '';
+                    renderTable();
+                });
+            }
+        }
+
+        // Inisialisasi
+        window.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            setupFilters();
+            
+            document.getElementById('shiftForm')?.addEventListener('submit', addShift);
+            document.getElementById('resetAllDataBtn')?.addEventListener('click', resetAllData);
+            document.getElementById('logoutBtn')?.addEventListener('click', logout);
+            
+            // Set tanggal default ke hari ini
+            const today = new Date().toISOString().split('T')[0];
+            const tanggalInput = document.getElementById('tanggal');
+            if (tanggalInput) tanggalInput.value = today;
+        });
+    </script>
+</body>
+</html>
