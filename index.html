@@ -3,315 +3,384 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>⚡ SHIFT GUARD - Cyberpunk Absen</title>
+  <title>⚡ SHIFT JAGA - CYBERPUNK EDITION</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Courier New', 'Fira Code', monospace;
     }
+
     body {
       background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
+      font-family: 'Courier New', 'Fira Code', monospace;
       color: #0ff;
-      padding: 1.5rem;
+      padding: 20px;
       min-height: 100vh;
     }
-    /* Neon glow & glitch effect */
-    h1 {
-      font-size: 2.2rem;
-      text-shadow: 0 0 5px #0ff, 0 0 12px #0ff;
-      border-left: 4px solid #f0f;
-      padding-left: 1rem;
-      margin-bottom: 1.5rem;
-      letter-spacing: 3px;
-    }
+
+    /* neon container */
     .container {
       max-width: 1400px;
-      margin: auto;
+      margin: 0 auto;
     }
+
+    /* header cyber */
+    h1 {
+      text-align: center;
+      font-size: 2.7rem;
+      letter-spacing: 5px;
+      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
+      margin-bottom: 20px;
+      word-break: keep-all;
+      animation: flicker 3s infinite;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 1; text-shadow: 0 0 2px #0ff; }
+      50% { opacity: 0.9; text-shadow: 0 0 8px #f0f, 0 0 12px #0ff; }
+      100% { opacity: 1; text-shadow: 0 0 2px #0ff; }
+    }
+
+    /* card cyber */
     .card {
       background: rgba(10, 20, 30, 0.7);
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
       border: 1px solid #0ff;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
       border-radius: 20px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-      transition: 0.2s;
+      padding: 20px;
+      margin-bottom: 30px;
+      transition: all 0.3s;
     }
+
     .form-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.2rem;
-      align-items: end;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
     }
+
     .input-group {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 6px;
     }
+
     label {
-      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      letter-spacing: 2px;
+      font-size: 0.8rem;
       color: #f0f;
     }
-    input, select {
-      background: #11161f;
+
+    input, select, button {
+      background: #111922;
       border: 1px solid #0ff;
-      padding: 10px 12px;
+      padding: 12px 15px;
       border-radius: 12px;
+      font-family: monospace;
+      font-size: 1rem;
       color: #0ff;
-      font-weight: bold;
       outline: none;
       transition: 0.2s;
     }
+
     input:focus, select:focus {
-      box-shadow: 0 0 8px #0ff;
       border-color: #f0f;
+      box-shadow: 0 0 8px #f0f;
     }
+
     button {
-      background: linear-gradient(135deg, #0ff, #f0f);
-      border: none;
-      padding: 10px 20px;
-      border-radius: 40px;
+      background: linear-gradient(45deg, #0ff, #f0f);
+      color: black;
       font-weight: bold;
-      color: #000;
       cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 0 6px cyan;
+      border: none;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    button:active { transform: scale(0.96); }
-    .btn-reset {
-      background: #2a2a3a;
-      box-shadow: none;
-      color: #0ff;
+
+    button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 15px #0ff;
     }
-    .nama-tabel {
-      font-size: 1.8rem;
-      margin: 1rem 0 0.5rem;
-      border-bottom: 2px dashed #f0f;
-      display: inline-block;
+
+    .btn-danger {
+      background: linear-gradient(45deg, #f44, #a00);
+      color: white;
     }
+
+    /* tabel data */
     .table-wrapper {
       overflow-x: auto;
-      margin-bottom: 2rem;
+      border-radius: 20px;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
-      background: #0a0f1ad9;
-      border-radius: 16px;
+      font-size: 0.85rem;
     }
+
     th, td {
       padding: 12px 8px;
       text-align: left;
-      border-bottom: 1px solid #0ff3;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
     }
+
     th {
-      background: #0f172f;
+      background: #0a1222;
       color: #f0f;
-      font-size: 0.8rem;
+      text-transform: uppercase;
     }
+
     tr:hover {
-      background: #0ff1a;
-      text-shadow: 0 0 2px cyan;
+      background: rgba(0, 255, 255, 0.1);
     }
-    .action-btn {
-      background: none;
-      border: 1px solid cyan;
-      border-radius: 30px;
-      padding: 4px 12px;
-      margin: 0 4px;
-      font-size: 0.7rem;
-      color: cyan;
-    }
-    .delete-btn { border-color: #f66; color: #f66; }
-    .filter-bar {
+
+    .action-buttons {
       display: flex;
-      gap: 1rem;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 1rem;
-      align-items: center;
     }
-    @media (max-width: 680px) {
-      body { padding: 1rem; }
-      h1 { font-size: 1.5rem; }
+
+    .edit-btn, .delete-btn {
+      padding: 5px 12px;
+      font-size: 0.7rem;
+      border-radius: 20px;
     }
-    .status-masuk { color: #0f0; text-shadow: 0 0 2px #0f0; }
-    .status-off, .status-cuti { color: #ffaa44; }
+
+    .edit-btn { background: #2a6; color: black; }
+    .delete-btn { background: #f44; color: white; }
+
+    @media (max-width: 760px) {
+      h1 { font-size: 1.8rem; }
+      .form-grid { grid-template-columns: 1fr; }
+      th, td { font-size: 0.7rem; padding: 8px 4px; }
+    }
+
+    .status-badge {
+      font-weight: bold;
+      text-shadow: 0 0 2px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.7rem;
+      color: #6af;
+    }
   </style>
 </head>
 <body>
 <div class="container">
-  <h1>◢ SHIFT GUARD ◣ <span style="font-size: 1rem;">[CYBERPUNK EDITION]</span></h1>
-  
+  <h1>⚡ SHIFT JAGA TERMINAL ⚡</h1>
+
   <div class="card">
-    <h3 style="margin-bottom: 1rem;">▸ INPUT CATATAN SHIFT</h3>
-    <div class="form-grid" id="formGrid">
-      <div class="input-group"><label>NAMA LENGKAP</label><input type="text" id="nama" placeholder="ex: Andi Saputra" required></div>
-      <div class="input-group"><label>TANGGAL</label><input type="date" id="tanggal"></div>
-      <div class="input-group"><label>SHIFT</label><select id="shift"><option value="Pagi">Pagi (07:00-19:00)</option><option value="Malam">Malam (19:00-07:00)</option></select></div>
-      <div class="input-group"><label>STATUS</label><select id="status"><option value="Masuk">Masuk</option><option value="Off">Off</option><option value="Cuti">Cuti</option></select></div>
-      <div class="input-group"><label><input type="checkbox" id="merah"> TANGGAL MERAH (Libur Nasional)</label></div>
-      <div class="input-group"><button id="simpanBtn">💾 SIMPAN DATA</button><button id="resetFormBtn" class="btn-reset">⟳ Reset</button></div>
-    </div>
+    <form id="shiftForm">
+      <div class="form-grid">
+        <div class="input-group">
+          <label>👤 Nama Lengkap</label>
+          <input type="text" id="nama" required placeholder="Nama lengkap..." />
+        </div>
+        <div class="input-group">
+          <label>🕒 Shift</label>
+          <select id="shift">
+            <option value="Pagi">🌞 Pagi (07:00 - 19:00)</option>
+            <option value="Malam">🌙 Malam (19:00 - 07:00)</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>📅 Tanggal</label>
+          <input type="date" id="tanggal" required />
+        </div>
+        <div class="input-group">
+          <label>🟢 Status Kerja</label>
+          <select id="status">
+            <option value="Masuk">✅ Masuk</option>
+            <option value="Off">🔴 Off</option>
+            <option value="Cuti">🌴 Cuti</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>🔴 Tanggal Merah</label>
+          <select id="tanggalMerah">
+            <option value="false">❌ Tidak</option>
+            <option value="true">✅ Ya</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>🆔 ID (untuk edit)</label>
+          <input type="text" id="editId" placeholder="Otomatis ketika edit" readonly />
+        </div>
+      </div>
+      <div style="display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;">
+        <button type="submit" id="btnSimpan">💾 SIMPAN DATA</button>
+        <button type="button" id="btnReset" class="btn-danger">🗑️ RESET FORM</button>
+      </div>
+    </form>
   </div>
 
   <div class="card">
-    <div class="filter-bar">
-      <label>📅 FILTER BULAN : </label>
-      <input type="month" id="filterBulan">
-      <button id="refreshDataBtn" style="background:#1f3a4b;">🔄 REFRESH DATA</button>
+    <h3 style="margin-bottom: 15px;">📋 DATABASE SHIFT JAGA</h3>
+    <div class="table-wrapper">
+      <table id="dataTable">
+        <thead>
+          <tr><th>Nama</th><th>Shift</th><th>Tanggal</th><th>Hari</th><th>Status</th><th>Merah</th><th>Aksi</th></tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="7" style="text-align:center">Memuat data...</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div id="rekapArea">Memuat data shift...</div>
   </div>
+  <footer>⚡ CYBER SHIFT SYSTEM • DATA TERSIMPAN DI GOOGLE SHEETS ⚡</footer>
 </div>
 
 <script>
-  // GANTI DENGAN URL WEB APP DARI GOOGLE APPS SCRIPT
-  const API_URL = 'https://script.google.com/macros/s/AKfycbyYVWclqYTE_gxRgidBr41s_Nl9hU56w_ngIzE1SOwCtKhEXhNZuVo_xHM_FJOozyzs/exec'; 
+  // GANTI DENGAN URL WEB APP ANDA !!!
+  const API_URL = "https://script.google.com/macros/s/AKfycbz3b4r7O6mIs2AP1kJN-dnmxJ9yocsUgGUVUqkzBFQZ1-gd8doo5LkHWVzhrmhP6O8p/exec"; 
 
-  let allRecords = [];
-  let editingId = null;
-
-  // Helper fetch ke backend
-  async function callApi(action, payload = {}) {
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action, ...payload })
-      });
-      return await res.json();
-    } catch(e) { console.error(e); alert("Gagal konek ke server, cek URL Apps Script"); }
+  // Helper fetch dengan form-urlencoded (simple request)
+  async function apiCall(action, params = {}) {
+    const formData = new URLSearchParams();
+    formData.append("action", action);
+    for (let [key, val] of Object.entries(params)) {
+      formData.append(key, String(val));
+    }
+    const response = await fetch(API_URL, {
+      method: "POST",
+      body: formData,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    });
+    return await response.json();
   }
 
   async function loadData() {
-    const data = await callApi('getAll');
-    if (data && Array.isArray(data)) allRecords = data;
-    else allRecords = [];
-    renderSemuaTabelPerNama();
-  }
-
-  function getHariDariTanggal(tglStr) {
-    const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
-    const d = new Date(tglStr);
-    return days[d.getDay()];
-  }
-
-  async function simpanData() {
-    const nama = document.getElementById('nama').value.trim();
-    if (!nama) return alert("Nama harus diisi!");
-    const tanggal = document.getElementById('tanggal').value;
-    if (!tanggal) return alert("Pilih tanggal!");
-    const shift = document.getElementById('shift').value;
-    const statusVal = document.getElementById('status').value;
-    const merah = document.getElementById('merah').checked;
-    const hari = getHariDariTanggal(tanggal);
-    const tahun = new Date(tanggal).getFullYear();
-    
-    const payload = { Nama: nama, Tanggal: tanggal, Hari: hari, Tahun: tahun, Shift: shift, Status: statusVal, TanggalMerah: merah };
-    
-    if (editingId) {
-      payload.id = editingId;
-      payload.action = 'update';
-      const res = await callApi('update', payload);
-      if (res.status) alert("Data diupdate!");
-      else alert("Gagal update");
-      editingId = null;
-    } else {
-      payload.action = 'add';
-      const res = await callApi('add', payload);
-      if (res.status) alert("Data tersimpan!");
+    try {
+      const res = await fetch(API_URL); // GET all data
+      const data = await res.json();
+      const tbody = document.getElementById("tableBody");
+      if (!Array.isArray(data) || data.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='7'>📭 Belum ada data shift</td></tr>";
+        return;
+      }
+      tbody.innerHTML = "";
+      data.forEach(record => {
+        const row = tbody.insertRow();
+        row.insertCell(0).innerText = record.NamaLengkap || "-";
+        row.insertCell(1).innerText = record.Shift || "-";
+        row.insertCell(2).innerText = record.Tanggal || "-";
+        row.insertCell(3).innerText = record.Hari || "-";
+        row.insertCell(4).innerHTML = `<span class="status-badge">${record.Status}</span>`;
+        row.insertCell(5).innerText = record.TanggalMerah === "Ya" ? "🔴 Ya" : "⚪ Tidak";
+        const aksi = row.insertCell(6);
+        aksi.className = "action-buttons";
+        aksi.innerHTML = `<button class="edit-btn" data-id="${record.ID}">✏️ Edit</button>
+                          <button class="delete-btn" data-id="${record.ID}">🗑️ Hapus</button>`;
+      });
+      // event listener untuk edit & delete
+      document.querySelectorAll(".edit-btn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          const id = btn.getAttribute("data-id");
+          await editRecordById(id);
+        });
+      });
+      document.querySelectorAll(".delete-btn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+          const id = btn.getAttribute("data-id");
+          if (confirm("Hapus data ini?")) {
+            const result = await apiCall("delete", { id });
+            if (result.success) {
+              alert("✅ Data terhapus");
+              loadData();
+              resetForm();
+            } else alert("Gagal hapus: " + result.error);
+          }
+        });
+      });
+    } catch (err) {
+      console.error(err);
+      document.getElementById("tableBody").innerHTML = "<tr><td colspan='7'>❌ Gagal memuat data</td></tr>";
     }
-    resetForm();
-    loadData();
+  }
+
+  async function editRecordById(id) {
+    // ambil data dari tabel dengan fetch langsung karena kita punya API get all
+    const res = await fetch(API_URL);
+    const allData = await res.json();
+    const record = allData.find(r => r.ID === id);
+    if (!record) return alert("Data tidak ditemukan");
+    document.getElementById("nama").value = record.NamaLengkap;
+    document.getElementById("shift").value = record.Shift;
+    document.getElementById("tanggal").value = record.Tanggal;
+    document.getElementById("status").value = record.Status;
+    document.getElementById("tanggalMerah").value = record.TanggalMerah === "Ya" ? "true" : "false";
+    document.getElementById("editId").value = record.ID;
+    // ubah tombol simpan sementara untuk update
+    const simpanBtn = document.getElementById("btnSimpan");
+    simpanBtn.innerText = "🔄 UPDATE DATA";
+    simpanBtn.onclick = async (e) => {
+      e.preventDefault();
+      const updatePayload = {
+        id: record.ID,
+        nama: document.getElementById("nama").value,
+        shift: document.getElementById("shift").value,
+        tanggal: document.getElementById("tanggal").value,
+        status: document.getElementById("status").value,
+        tanggalMerah: document.getElementById("tanggalMerah").value
+      };
+      const result = await apiCall("update", updatePayload);
+      if (result.success) {
+        alert("Data diperbarui!");
+        loadData();
+        resetForm();
+        simpanBtn.innerText = "💾 SIMPAN DATA";
+        simpanBtn.onclick = submitNewData;
+      } else alert("Update gagal: " + result.error);
+    };
+  }
+
+  async function submitNewData(e) {
+    e.preventDefault();
+    const payload = {
+      nama: document.getElementById("nama").value,
+      shift: document.getElementById("shift").value,
+      tanggal: document.getElementById("tanggal").value,
+      status: document.getElementById("status").value,
+      tanggalMerah: document.getElementById("tanggalMerah").value
+    };
+    if (!payload.nama || !payload.tanggal) return alert("Nama dan tanggal wajib diisi!");
+    const result = await apiCall("add", payload);
+    if (result.success) {
+      alert("Data tersimpan dengan ID: " + result.id);
+      loadData();
+      resetForm();
+    } else {
+      alert("Error: " + result.error);
+    }
   }
 
   function resetForm() {
-    document.getElementById('nama').value = '';
-    document.getElementById('tanggal').value = new Date().toISOString().slice(0,10);
-    document.getElementById('shift').value = 'Pagi';
-    document.getElementById('status').value = 'Masuk';
-    document.getElementById('merah').checked = false;
-    editingId = null;
-  }
-
-  async function hapusData(id) {
-    if(confirm("Yakin hapus catatan ini?")){
-      const res = await callApi('delete', { id: id });
-      if(res.status) alert("Terhapus!");
-      loadData();
+    document.getElementById("shiftForm").reset();
+    document.getElementById("editId").value = "";
+    const simpanBtn = document.getElementById("btnSimpan");
+    simpanBtn.innerText = "💾 SIMPAN DATA";
+    simpanBtn.onclick = submitNewData;
+    // set default tanggal hari ini
+    if (!document.getElementById("tanggal").value) {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("tanggal").value = today;
     }
   }
 
-  async function editRecord(rec) {
-    document.getElementById('nama').value = rec.Nama;
-    document.getElementById('tanggal').value = rec.Tanggal;
-    document.getElementById('shift').value = rec.Shift;
-    document.getElementById('status').value = rec.Status;
-    document.getElementById('merah').checked = (rec.TanggalMerah === 'Ya');
-    editingId = rec.ID;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  function renderSemuaTabelPerNama() {
-    const filterBulan = document.getElementById('filterBulan').value;
-    let filtered = [...allRecords];
-    if (filterBulan) {
-      filtered = filtered.filter(r => r.Tanggal && r.Tanggal.startsWith(filterBulan));
-    }
-    // Group by Nama
-    const group = {};
-    filtered.forEach(rec => {
-      if(!group[rec.Nama]) group[rec.Nama] = [];
-      group[rec.Nama].push(rec);
-    });
-    // Urutkan nama
-    const sortedNames = Object.keys(group).sort();
-    const container = document.getElementById('rekapArea');
-    if(sortedNames.length === 0) {
-      container.innerHTML = `<div class="card" style="text-align:center">✨ Tidak ada data untuk filter ini ✨</div>`;
-      return;
-    }
-    let html = '';
-    for(let nama of sortedNames) {
-      let records = group[nama];
-      records.sort((a,b) => (a.Tanggal > b.Tanggal) ? 1 : -1);
-      html += `<div style="margin-top: 1.8rem;"><div class="nama-tabel">🔹 ${nama.toUpperCase()} 🔹</div>
-      <div class="table-wrapper">
-      <table>
-        <thead><tr>
-          <th>Tanggal</th><th>Hari</th><th>Tahun</th><th>Shift</th><th>Status</th><th>Tanggal Merah</th><th>Jam Mulai</th><th>Jam Selesai</th><th>Aksi</th>
-        </tr></thead><tbody>`;
-      for(let rec of records) {
-        const merahLabel = rec.TanggalMerah === 'Ya' ? '✅ Merah' : 'Tidak';
-        const statusClass = (rec.Status === 'Masuk') ? 'status-masuk' : 'status-off';
-        html += `<tr>
-          <td>${rec.Tanggal}</td><td>${rec.Hari || '-'}</td><td>${rec.Tahun || '-'}</td><td>${rec.Shift}</td>
-          <td class="${statusClass}">${rec.Status}</td><td>${merahLabel}</td>
-          <td>${rec.JamMulai || '-'}</td><td>${rec.JamSelesai || '-'}</td>
-          <td><button class="action-btn" onclick='editRecord(${JSON.stringify(rec).replace(/'/g, "&#39;")})'>✏️ Edit</button>
-          <button class="action-btn delete-btn" onclick="hapusData('${rec.ID}')">🗑️ Hapus</button></td>
-        </tr>`;
-      }
-      html += `</tbody></table></div></div>`;
-    }
-    container.innerHTML = html;
-  }
-
-  // Event binding
-  document.getElementById('simpanBtn').onclick = simpanData;
-  document.getElementById('resetFormBtn').onclick = resetForm;
-  document.getElementById('refreshDataBtn').onclick = loadData;
-  document.getElementById('filterBulan').addEventListener('change', () => renderSemuaTabelPerNama());
-  
-  // set default tanggal hari ini
-  document.getElementById('tanggal').value = new Date().toISOString().slice(0,10);
-  loadData();
+  // event init
+  window.onload = () => {
+    resetForm();
+    loadData();
+    document.getElementById("btnReset").onclick = resetForm;
+    document.getElementById("btnSimpan").onclick = submitNewData;
+  };
 </script>
 </body>
 </html>
