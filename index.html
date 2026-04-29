@@ -1,421 +1,383 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Shift Jaga | Cyberpunk</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Courier New', 'Fira Code', monospace;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>CyberShift - Monitoring Shift Jaga</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Courier New', 'Fira Code', monospace;
+        }
 
-    body {
-      background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
-      color: #0ff;
-      padding: 20px;
-      min-height: 100vh;
-    }
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
+            min-height: 100vh;
+            padding: 20px;
+            color: #0ff;
+        }
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
+        .glass-card {
+            background: rgba(10, 20, 30, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 28px;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
 
-    .neon-card {
-      background: rgba(10, 20, 30, 0.75);
-      backdrop-filter: blur(12px);
-      border: 1px solid #0ff;
-      border-radius: 24px;
-      box-shadow: 0 0 15px #0ff4, 0 0 5px #0ff2;
-      padding: 24px;
-      margin-bottom: 30px;
-      transition: 0.3s;
-    }
+        .btn-cyber {
+            background: linear-gradient(135deg, #0a0f2a, #001122);
+            border: 1.5px solid #0ff;
+            color: #0ff;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
 
-    .neon-card:hover {
-      box-shadow: 0 0 30px #0ff, 0 0 10px #0ff;
-    }
+        .btn-cyber:hover {
+            background: #0ff;
+            color: #000;
+            box-shadow: 0 0 20px #0ff;
+            transform: translateY(-2px);
+        }
 
-    h1, h2 {
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      text-shadow: 0 0 5px #0ff, 0 0 10px #0ff;
-      margin-bottom: 20px;
-    }
+        .header-cyber {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
+        .header-cyber h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #0ff, #f0f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
 
-    .input-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
+        .filter-section {
+            display: flex;
+            gap: 12px;
+            margin: 20px 0 25px 0;
+            flex-wrap: wrap;
+        }
 
-    label {
-      font-weight: bold;
-      letter-spacing: 1px;
-      font-size: 0.9rem;
-    }
+        input, select {
+            background: #0a0f1c;
+            border: 1px solid #0ff;
+            border-radius: 20px;
+            padding: 10px 16px;
+            color: #0ff;
+            flex: 1;
+            outline: none;
+            font-size: 0.9rem;
+        }
 
-    input, select {
-      background: #0a0f1ecc;
-      border: 1px solid #0ff;
-      padding: 12px;
-      border-radius: 16px;
-      color: #0ff;
-      font-size: 1rem;
-      outline: none;
-      transition: 0.2s;
-    }
+        input:focus, select:focus {
+            border-color: #f0f;
+            box-shadow: 0 0 8px #f0f;
+        }
 
-    input:focus, select:focus {
-      box-shadow: 0 0 12px #0ff;
-      border-color: #f0f;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    button {
-      background: linear-gradient(90deg, #0ff, #f0f);
-      border: none;
-      padding: 14px 32px;
-      border-radius: 40px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #000;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 0 15px #0ff;
-      font-size: 1rem;
-    }
+        th, td {
+            padding: 12px 10px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            text-align: left;
+        }
 
-    button:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 25px #f0f;
-    }
+        th {
+            color: #f0f;
+            font-weight: bold;
+            text-shadow: 0 0 3px magenta;
+            font-size: 0.85rem;
+        }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+        td {
+            font-size: 0.85rem;
+        }
 
-    .table-wrapper {
-      overflow-x: auto;
-      border-radius: 16px;
-    }
+        .scroll-table {
+            overflow-x: auto;
+            border-radius: 16px;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
-    }
+        .status-badge {
+            background: rgba(0, 255, 255, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: inline-block;
+        }
 
-    th, td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #0ff3;
-    }
+        .status-Pagi { border-left: 3px solid #0ff; }
+        .status-Malam { border-left: 3px solid #f0f; }
+        .status-OFF { border-left: 3px solid #ffa500; }
+        .status-Cuti { border-left: 3px solid #0f0; }
+        .status-Tanggal-Merah { border-left: 3px solid #f00; }
 
-    th {
-      background: #0ff2;
-      color: #0ff;
-      text-shadow: 0 0 2px #0ff;
-      font-weight: bold;
-    }
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .glass-card { padding: 16px; }
+            th, td { padding: 8px 4px; font-size: 0.7rem; }
+            .btn-cyber { padding: 8px 16px; font-size: 0.8rem; }
+            .header-cyber h1 { font-size: 1.5rem; }
+        }
 
-    td {
-      color: #cfcfff;
-    }
+        .admin-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+        }
 
-    .status-badge {
-      padding: 4px 12px;
-      border-radius: 30px;
-      font-weight: bold;
-      background: #0a0f1e;
-      display: inline-block;
-    }
+        .stats {
+            display: flex;
+            gap: 15px;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
+            flex-wrap: wrap;
+        }
 
-    .status-Masuk { color: #0f0; text-shadow: 0 0 3px #0f0; }
-    .status-Off { color: #ff0; text-shadow: 0 0 3px #ff0; }
-    .status-Cuti { color: #f80; text-shadow: 0 0 3px #f80; }
-    .merah { color: #f66; text-shadow: 0 0 3px #f66; font-weight: bold; }
-
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 12px;
-      opacity: 0.7;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 40px;
-      font-size: 1.2rem;
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #0a0f1e;
-      border: 1px solid #0ff;
-      padding: 12px 24px;
-      border-radius: 40px;
-      z-index: 999;
-      animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    @media (max-width: 700px) {
-      .neon-card { padding: 16px; }
-      th, td { font-size: 12px; padding: 8px; }
-      button { padding: 10px 20px; font-size: 0.9rem; }
-    }
-  </style>
+        .stat-item {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <div class="neon-card">
-    <h1>⚡ SHIFT JAGA - CYBERPUNK ⚡</h1>
-    <div class="form-grid">
-      <div class="input-group">
-        <label>👤 Nama Lengkap</label>
-        <input type="text" id="nama" placeholder="Andi Wijaya" required>
-      </div>
-      <div class="input-group">
-        <label>⏰ Shift Jaga</label>
-        <select id="shift">
-          <option value="Pagi">Pagi (07:00-19:00)</option>
-          <option value="Malam">Malam (19:00-07:00)</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label>📌 Status</label>
-        <select id="status">
-          <option value="Masuk">Masuk</option>
-          <option value="Off">Off</option>
-          <option value="Cuti">Cuti</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label>🔴 Tanggal Merah (Libur Nasional)</label>
-        <select id="merah">
-          <option value="false">Tidak</option>
-          <option value="true">Ya</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label>📅 Hari & Tanggal Otomatis</label>
-        <input type="text" id="hariOtomatis" readonly style="background:#0a0f1e55">
-      </div>
-      <div class="input-group">
-        <label>📆 Tanggal (Angka)</label>
-        <input type="text" id="tglOtomatis" readonly style="background:#0a0f1e55">
-      </div>
-      <div class="input-group">
-        <label>🗓️ Bulan Tahun</label>
-        <input type="text" id="blnOtomatis" readonly style="background:#0a0f1e55">
-      </div>
-    </div>
-    <div style="margin-top: 25px; text-align: center;">
-      <button id="simpanBtn">💾 SIMPAN SHIFT</button>
-    </div>
-  </div>
+    <div class="glass-card" style="max-width: 1400px; margin: 0 auto;">
+        <div class="header-cyber">
+            <h1>⚠️ CYBER SHIFT MONITORING ⚡</h1>
+            <p style="color: #9cf; margin-top: 8px;">| Real-time Logbook | Shift Management |</p>
+        </div>
 
-  <div class="neon-card">
-    <h2>📋 DATA SHIFT TERSIMPAN</h2>
-    <div class="table-wrapper">
-      <table id="dataTable">
-        <thead>
-          <tr>
-            <th>Nama</th>
-            <th>Shift</th>
-            <th>Status</th>
-            <th>Tanggal Merah</th>
-            <th>Hari</th>
-            <th>Tanggal</th>
-            <th>Bulan/Tahun</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody">
-          <tr><td colspan="7" style="text-align:center">🔄 Memuat data...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="footer">
-    ⚙️ CYBERPUNK SHIFT SYSTEM | DATA REAL-TIME | v2.0
-  </div>
-</div>
+        <div class="filter-section">
+            <input type="text" id="filterNama" placeholder="🔍 Filter Nama Karyawan...">
+            <select id="filterShift">
+                <option value="">📋 Semua Shift</option>
+                <option value="Pagi">🌞 Pagi (07:00-19:00)</option>
+                <option value="Malam">🌙 Malam (19:00-07:00)</option>
+                <option value="OFF">💤 OFF</option>
+                <option value="Cuti">🏖️ Cuti</option>
+                <option value="Tanggal Merah">🔴 Tanggal Merah</option>
+            </select>
+            <button id="clearFilter" class="btn-cyber">⟳ Reset Filter</button>
+        </div>
 
-<script>
-  // ========================
-  // ⚠️ GANTI DENGAN URL WEB APP KAMU ⚠️
-  // ========================
-  const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyYhttjDuOvkiQRZGqFrJxQuVpz2Q7czTzWjAfmgglMXknf0QUWW-UgJIL4ur9d2QAr_g/exec';
-  
-  // Update tanggal otomatis
-  function updateDateTime() {
-    const now = new Date();
-    const hariArr = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-    const bulanArr = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    const hari = hariArr[now.getDay()];
-    const tanggal = now.getDate();
-    const bulanTahun = `${bulanArr[now.getMonth()]} ${now.getFullYear()}`;
-    document.getElementById('hariOtomatis').value = hari;
-    document.getElementById('tglOtomatis').value = tanggal;
-    document.getElementById('blnOtomatis').value = bulanTahun;
-    return { hari, tanggal, bulanTahun };
-  }
-  
-  // Tampilkan notifikasi
-  function showToast(message, isError = false) {
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.style.borderColor = isError ? '#f66' : '#0f0';
-    toast.style.color = isError ? '#f66' : '#0f0';
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
-  }
-  
-  // Load data dari Google Sheets
-  async function loadData() {
-    const tbody = document.getElementById('tableBody');
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">🔄 Memuat data...</td></tr>';
-    
-    try {
-      const response = await fetch(`${WEB_APP_URL}?action=getAll`, {
-        method: 'GET',
-        mode: 'cors'
-      });
-      
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      
-      const data = await response.json();
-      
-      if (!data || data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">📭 Belum ada data shift</td></tr>';
-        return;
-      }
-      
-      if (data.error) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center">❌ Error: ${data.error}</td></tr>`;
-        return;
-      }
-      
-      tbody.innerHTML = '';
-      data.forEach(row => {
-        const tr = document.createElement('tr');
-        const merahClass = row['TanggalMerah'] === 'Ya' ? 'merah' : '';
-        const statusClass = `status-${row['Status'] || ''}`;
-        
-        tr.innerHTML = `
-          <td><strong>${escapeHtml(row['NamaLengkap'] || '-')}</strong></td>
-          <td>${escapeHtml(row['Shift'] || '-')}</td>
-          <td><span class="status-badge ${statusClass}">${escapeHtml(row['Status'] || '-')}</span></td>
-          <td class="${merahClass}">${row['TanggalMerah'] || 'Tidak'}</td>
-          <td>${escapeHtml(row['Hari'] || '-')}</td>
-          <td>${escapeHtml(row['Tanggal'] || '-')}</td>
-          <td>${escapeHtml(row['BulanTahun'] || '-')}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-      
-      showToast(`✅ Memuat ${data.length} data`, false);
-      
-    } catch (err) {
-      console.error('Load error:', err);
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center">❌ Gagal memuat data: ${err.message}</td></tr>`;
-      showToast('❌ Gagal memuat data', true);
-    }
-  }
-  
-  // Escape HTML untuk keamanan
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-  
-  // Simpan data shift
-  async function simpanShift() {
-    const nama = document.getElementById('nama').value.trim();
-    if (!nama) {
-      showToast('⚠️ Nama lengkap harus diisi!', true);
-      return;
-    }
-    
-    const dateData = updateDateTime();
-    
-    const payload = {
-      nama: nama,
-      shift: document.getElementById('shift').value,
-      status: document.getElementById('status').value,
-      tanggalMerah: document.getElementById('merah').value === 'true',
-      hari: dateData.hari,
-      tanggal: dateData.tanggal.toString(),
-      bulanTahun: dateData.bulanTahun
-    };
-    
-    const btn = document.getElementById('simpanBtn');
-    btn.disabled = true;
-    btn.textContent = '⌛ MENYIMPAN...';
-    
-    try {
-      const response = await fetch(WEB_APP_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        showToast('✅ Data shift berhasil tersimpan!', false);
-        document.getElementById('nama').value = '';
-        await loadData(); // Reload data
-      } else {
-        showToast(`❌ Gagal: ${result.message || result.error}`, true);
-      }
-      
-    } catch (err) {
-      console.error('Save error:', err);
-      showToast(`❌ Error: ${err.message}`, true);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = '💾 SIMPAN SHIFT';
-    }
-  }
-  
-  // Event listeners
-  document.getElementById('simpanBtn').addEventListener('click', simpanShift);
-  
-  // Initial load
-  updateDateTime();
-  loadData();
-  
-  // Auto refresh setiap 30 detik
-  setInterval(() => {
-    loadData();
-  }, 30000);
-</script>
+        <div class="scroll-table">
+            <table id="rekapanTable">
+                <thead>
+                    <tr>
+                        <th>👤 Nama</th>
+                        <th>📅 Tanggal</th>
+                        <th>⚙️ Shift</th>
+                        <th>⏰ Jam Jaga</th>
+                        <th>📝 Catatan</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr><td colspan="5" style="text-align:center">🔄 Memuat data shift...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="stats" id="statsArea">
+            <!-- Stats akan diisi JavaScript -->
+        </div>
+
+        <div style="margin-top: 20px; text-align: center; font-size: 11px; color: #6cf;">
+            💾 Data tersimpan di LocalStorage | © CyberShift System
+        </div>
+    </div>
+
+    <div class="admin-fab">
+        <a href="admin-login.html" class="btn-cyber" style="padding: 12px 24px;">🔐 ADMIN LOGIN</a>
+    </div>
+
+    <script>
+        // Variabel global
+        let shiftData = [];
+
+        // Fungsi mendapatkan jam jaga berdasarkan status
+        function getJamRange(status) {
+            const jamMap = {
+                'Pagi': '07:00 - 19:00',
+                'Malam': '19:00 - 07:00',
+                'OFF': '— OFF —',
+                'Cuti': '🏖️ Cuti Resmi',
+                'Tanggal Merah': '🔴 Libur Nasional'
+            };
+            return jamMap[status] || '—';
+        }
+
+        // Format tanggal
+        function formatTanggal(dateStr) {
+            if (!dateStr) return '-';
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return dateStr;
+            return `${parts[2]}/${parts[1]}/${parts[0]}`;
+        }
+
+        // Escape HTML
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Load data dari localStorage
+        function loadDataFromStorage() {
+            const stored = localStorage.getItem('cyber_jaga_db');
+            if (stored) {
+                try {
+                    shiftData = JSON.parse(stored);
+                    if (!Array.isArray(shiftData)) shiftData = [];
+                } catch(e) {
+                    console.error('Error parsing data:', e);
+                    shiftData = [];
+                }
+            } else {
+                // Data contoh jika kosong
+                shiftData = [
+                    { id: Date.now() + 1, nama: "Budi Santoso", tanggal: "2025-04-28", status: "Pagi", catatan: "Shift normal" },
+                    { id: Date.now() + 2, nama: "Citra Dewi", tanggal: "2025-04-28", status: "Malam", catatan: "Waspada" },
+                    { id: Date.now() + 3, nama: "Dedi Kurniawan", tanggal: "2025-04-29", status: "OFF", catatan: "Istirahat" }
+                ];
+                saveToLocalStorage();
+            }
+            renderTable();
+            updateStats();
+        }
+
+        // Simpan ke localStorage
+        function saveToLocalStorage() {
+            localStorage.setItem('cyber_jaga_db', JSON.stringify(shiftData));
+        }
+
+        // Update statistik
+        function updateStats() {
+            const statsDiv = document.getElementById('statsArea');
+            if (!statsDiv) return;
+            
+            const total = shiftData.length;
+            const pagi = shiftData.filter(d => d.status === 'Pagi').length;
+            const malam = shiftData.filter(d => d.status === 'Malam').length;
+            
+            statsDiv.innerHTML = `
+                <div class="stat-item">📊 Total Data: ${total}</div>
+                <div class="stat-item">🌞 Shift Pagi: ${pagi}</div>
+                <div class="stat-item">🌙 Shift Malam: ${malam}</div>
+                <div class="stat-item">📅 Update Real-time</div>
+            `;
+        }
+
+        // Render tabel dengan filter
+        function renderTable() {
+            const filterNama = document.getElementById('filterNama')?.value.toLowerCase() || '';
+            const filterShiftVal = document.getElementById('filterShift')?.value || '';
+
+            let filtered = [...shiftData];
+            
+            if (filterNama) {
+                filtered = filtered.filter(item => item.nama && item.nama.toLowerCase().includes(filterNama));
+            }
+            if (filterShiftVal) {
+                filtered = filtered.filter(item => item.status === filterShiftVal);
+            }
+
+            // Urutkan berdasarkan tanggal terbaru
+            filtered.sort((a, b) => (b.tanggal || '').localeCompare(a.tanggal || ''));
+
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center">⚡ Tidak ada data shift yang ditemukan ⚡</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(item => {
+                let statusClass = '';
+                if (item.status === 'Pagi') statusClass = 'status-Pagi';
+                else if (item.status === 'Malam') statusClass = 'status-Malam';
+                else if (item.status === 'OFF') statusClass = 'status-OFF';
+                else if (item.status === 'Cuti') statusClass = 'status-Cuti';
+                else if (item.status === 'Tanggal Merah') statusClass = 'status-Tanggal-Merah';
+                
+                return `
+                    <tr class="${statusClass}">
+                        <td><strong>${escapeHtml(item.nama)}</strong></td>
+                        <td>${formatTanggal(item.tanggal)}</td>
+                        <td><span class="status-badge">${item.status}</span></td>
+                        <td>${getJamRange(item.status)}</td>
+                        <td>${escapeHtml(item.catatan || '-')}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            const filterNama = document.getElementById('filterNama');
+            const filterShift = document.getElementById('filterShift');
+            const clearBtn = document.getElementById('clearFilter');
+
+            if (filterNama) {
+                filterNama.addEventListener('input', () => {
+                    renderTable();
+                    updateStats();
+                });
+            }
+            if (filterShift) {
+                filterShift.addEventListener('change', () => {
+                    renderTable();
+                    updateStats();
+                });
+            }
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    if (filterNama) filterNama.value = '';
+                    if (filterShift) filterShift.value = '';
+                    renderTable();
+                    updateStats();
+                });
+            }
+        }
+
+        // Listen untuk storage changes dari halaman lain
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'cyber_jaga_db') {
+                loadDataFromStorage();
+            }
+        });
+
+        // Inisialisasi
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDataFromStorage();
+            setupEventListeners();
+        });
+    </script>
 </body>
 </html>
